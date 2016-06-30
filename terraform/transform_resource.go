@@ -328,6 +328,13 @@ func (n *graphNodeExpandedResource) managedResourceEvalNodes(resource *Resource,
 					Name:   n.ProvidedBy()[0],
 					Output: &provider,
 				},
+				&EvalValidateResource{
+					Provider:     &provider,
+					Config:       &resourceConfig,
+					ResourceName: n.Resource.Name,
+					ResourceType: n.Resource.Type,
+					ResourceMode: n.Resource.Mode,
+				},
 				&EvalReadState{
 					Name:   n.stateId(),
 					Output: &state,
@@ -454,7 +461,13 @@ func (n *graphNodeExpandedResource) managedResourceEvalNodes(resource *Resource,
 					Name:   n.stateId(),
 					Output: &state,
 				},
-
+				&EvalValidateResource{
+					Provider:     &provider,
+					Config:       &resourceConfig,
+					ResourceName: n.Resource.Name,
+					ResourceType: n.Resource.Type,
+					ResourceMode: n.Resource.Mode,
+				},
 				&EvalDiff{
 					Info:       info,
 					Config:     &resourceConfig,
